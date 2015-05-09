@@ -13,7 +13,7 @@
   </condition>
   <condition property="platform" value="macosx-java-latest"><os family="mac" /></condition>
   <condition property="platform" value="windows"><os family="windows" /></condition>
-  <condition property="platform" value="linux32"><os family="unix" arch="i386" /></condition>
+  <condition property="platform" value="linux32"><os family="unix" arch="arm" /></condition>
   <condition property="platform" value="linux64"><os family="unix" arch="amd64" /></condition>
 
   <condition property="macosx"><equals arg1="${platform}" arg2="macosx" /></condition>
@@ -617,25 +617,44 @@
       <param name="dest_folder" value="${staging_folder}" />
     </antcall>
     <copy file="linux/libastylej/libastylej${arch-bits}.so" tofile="linux/work/lib/libastylej.so" />
+
     <chmod perm="755" file="linux/work/lib/libastylej.so" />
   </target>
 
   <target name="linux32-build" depends="linux-build" description="Build linux (32-bit) version">
     <!-- Unzip ARM tools -->
+<!--
     <antcall target="untar">
       <param name="archive_file" value="${staging_folder}/dist/gcc-arm-none-eabi-4.8.3-2014q1-linux32.tar.gz" />
       <param name="archive_url" value="http://arduino.cc/download.php?f=/gcc-arm-none-eabi-4.8.3-2014q1-linux32.tar.gz" />
       <param name="final_folder" value="${staging_folder}/work/${staging_hardware_folder}/tools/gcc-arm-none-eabi-4.8.3-2014q1" />
       <param name="dest_folder" value="${staging_folder}/work/${staging_hardware_folder}/tools/" />
     </antcall>
-
+-->
     <!-- Unzip AVR tools -->
+<!--
     <antcall target="unzip">
       <param name="archive_file" value="${staging_folder}/avr-toolchain-linux32-3.4.5.zip" />
       <param name="archive_url" value="http://arduino.cc/download.php?f=/avr-toolchain-linux32-3.4.5.zip" />
       <param name="final_folder" value="${staging_folder}/work/${staging_hardware_folder}/tools/avr" />
       <param name="dest_folder" value="${staging_folder}/work/${staging_hardware_folder}/tools/avr" />
     </antcall>
+-->
+    <antcall target="untar">
+      <param name="archive_file" value="${staging_folder}/dist/linux32-xtensa-lx106-elf.tgz" />
+      <param name="archive_url" value="http://download.igrr.me/linux32-xtensa-lx106-elf.tgz" />
+      <param name="final_folder" value="${staging_folder}/work/${staging_hardware_folder}/tools/esp8266/xtensa-lx106-elf" />
+      <param name="dest_folder" value="${staging_folder}/work/${staging_hardware_folder}/tools/esp8266/" />
+    </antcall>
+    <antcall target="unzip">
+      <param name="archive_file" value="${staging_folder}/esptool-0.4.3-linux32.zip" />
+      <param name="archive_url" value="https://github.com/igrr/esptool-ck/releases/download/0.4.3/esptool-0.4.3-linux32.zip" />
+      <param name="final_folder" value="${staging_folder}/work/${staging_hardware_folder}/tools/esp8266/esptool-0.4.3-linux32" />
+      <param name="dest_folder" value="${staging_folder}/work/${staging_hardware_folder}/tools/esp8266/" />
+    </antcall>
+    <move file="${staging_folder}/work/${staging_hardware_folder}/tools/esp8266/esptool-0.4.3-linux32/esptool" tofile="${staging_folder}/work/${staging_hardware_folder}/tools/esp8266/esptool" />
+    <delete dir="${staging_folder}/work/${staging_hardware_folder}/tools/esp8266/esptool-0.4.3-linux32/" />
+
   </target>
 
   <target name="linux64-build" depends="linux-build" description="Build linux (64-bit) version">
