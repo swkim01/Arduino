@@ -22,19 +22,19 @@ $ ant dist
 
 ### Execution on Raspbian ###
 Update software packages
-'''
+```
 $ sudo apt-get update
 $ sudo apt-get upgrade
-'''
+```
 Add jessie repositories
-'''
+```
 $ sudo nano /etc/apt/sources.list
 # add these lines at the bottom (Ctrl + X, Y, Enter):
 deb http://mirrordirector.raspbian.org/raspbian/ jessie main contrib non-free rpi
 deb http://archive.raspbian.org/raspbian jessie main contrib non-free rpi
-'''
+```
 Add preferences file.
-'''
+```
 $ sudo nano /etc/apt/preferences
 Package: *
 Pin: release n=wheezy
@@ -47,19 +47,19 @@ Pin-Priority: 300
 Package: *
 Pin: release o=Raspbian
 Pin-Priority: -10
-'''
+```
 Update dependencies.
-'''
+```
 $ sudo apt-get update
-'''
+```
 Install the newest avr-gcc first
-'''
+```
 $ sudo apt-get -t jessie install gcc-avr
-''' 
+```
 Install missing packages for the IDE (say yes to the message).
-'''
+```
 $ sudo apt-get -t jessie install avrdude avr-libc libjssc-java libastylej-jni libcommons-exec-java libcommons-httpclient-java libcommons-logging-java libjmdns-java libjna-java libjsch-java
-'''
+```
 Download above arduino package and run.
 
 ### Supported boards ###
