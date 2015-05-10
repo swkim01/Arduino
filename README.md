@@ -10,14 +10,57 @@ This project brings support for ESP8266 chip to the Arduino environment. ESP8266
 | Linux | [![Linux build status](http://img.shields.io/travis/igrr/Arduino.svg)](https://travis-ci.org/igrr/Arduino) | [arduino-1.6.1-linux64.tar.xz](../../releases/download/1.6.1-esp8266-1/arduino-1.6.1-linux64.tar.xz) |
 | Windows | [![Windows build status](http://img.shields.io/appveyor/ci/igrr/Arduino.svg)](https://ci.appveyor.com/project/igrr/Arduino) | [arduino-1.6.1-p1-windows.zip](https://github.com/igrr/Arduino/releases/download/1.6.1-esp8266-1/arduino-1.6.1-p1-windows.zip) |
 | OS X |  | [arduino-1.6.1-macosx-java-latest-signed.zip](../../releases/download/1.6.1-esp8266-1/arduino-1.6.1-macosx-java-latest-signed.zip) |
+| Linux (Raspbian) |  | [arduino-1.6.1-linux32.tar.xz](../../releases/download/1.6.1-esp8266-rpi/arduino-1.6.1-linux32.tar.xz) |
 
 
 ### Building from source ###
 ```
-$ git clone https://github.com/esp8266/Arduino.git
+$ git clone https://github.com/swkim01/Arduino.git
 $ cd Arduino/build
 $ ant dist
 ```
+
+### Execution on Raspbian ###
+Update software packages
+'''
+$ sudo apt-get update
+$ sudo apt-get upgrade
+'''
+Add jessie repositories
+'''
+$ sudo nano /etc/apt/sources.list
+# add these lines at the bottom (Ctrl + X, Y, Enter):
+deb http://mirrordirector.raspbian.org/raspbian/ jessie main contrib non-free rpi
+deb http://archive.raspbian.org/raspbian jessie main contrib non-free rpi
+'''
+Add preferences file.
+'''
+$ sudo nano /etc/apt/preferences
+Package: *
+Pin: release n=wheezy
+Pin-Priority: 900
+ 
+Package: *
+Pin: release n=jessie
+Pin-Priority: 300
+ 
+Package: *
+Pin: release o=Raspbian
+Pin-Priority: -10
+'''
+Update dependencies.
+'''
+$ sudo apt-get update
+'''
+Install the newest avr-gcc first
+'''
+$ sudo apt-get -t jessie install gcc-avr
+''' 
+Install missing packages for the IDE (say yes to the message).
+'''
+$ sudo apt-get -t jessie install avrdude avr-libc libjssc-java libastylej-jni libcommons-exec-java libcommons-httpclient-java libcommons-logging-java libjmdns-java libjna-java libjsch-java
+'''
+Download above arduino package and run.
 
 ### Supported boards ###
 - [Wifio](http://wifio.cc)
